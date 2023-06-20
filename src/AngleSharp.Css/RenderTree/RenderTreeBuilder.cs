@@ -123,8 +123,10 @@ namespace AngleSharp.Css.RenderTree
                 }
                 else if (value is Length { IsRelative: true, Type: not Length.Unit.None } relativeLength)
                 {
+                    // https://www.w3.org/TR/css3-values/#font-relative-lengths
                     var pixelValue = relativeLength.Type switch
                     {
+                        Length.Unit.Ch or Length.Unit.Ex => relativeLength.Value * fontSize * 0.5,
                         Length.Unit.Em => relativeLength.Value * fontSize,
                         Length.Unit.Rem => relativeLength.Value * rootFontSize,
                         _ => relativeLength.ToPixel(_device),
