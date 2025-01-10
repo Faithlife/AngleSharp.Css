@@ -32,7 +32,13 @@ namespace AngleSharp.Css.RenderTree
             var stylesheets = _defaultSheets.Concat(currentSheets).ToList();
             var collection = new StyleCollection(stylesheets, _device);
             var rootStyle = collection.ComputeCascadedStyle(document.DocumentElement);
-            var rootFontSize = ((Length?) rootStyle.GetProperty(PropertyNames.FontSize)?.RawValue)?.Value ?? 16;
+            var rootFontValue = rootStyle.GetProperty(PropertyNames.FontSize)?.RawValue;
+            var rootFontSize = rootFontValue switch
+            {
+                Length length => length.Value,
+                Constant<Length> constant => constant.Value.Value,
+                _ => 16
+            };
             return RenderElement(rootFontSize, document.DocumentElement, collection);
         }
 
