@@ -309,7 +309,7 @@ namespace AngleSharp.Css.Values
                     CheckForValidRenderDimensions(renderDimensions, RenderMode.Vertical);
                     return _value * 0.01 * Math.Min(renderDimensions.RenderHeight, renderDimensions.RenderWidth);
                 default:
-                    throw new InvalidOperationException("Unsupported unit cannot be converted.");
+                    throw new InvalidOperationException($"Unsupported unit '{_unit}' cannot be converted.");
             }
         }
 
@@ -361,7 +361,7 @@ namespace AngleSharp.Css.Values
                     CheckForValidRenderDimensions(renderDimensions, RenderMode.Horizontal);
                     return value / ( 0.01 * Math.Min(renderDimensions.RenderHeight, renderDimensions.RenderWidth));
                 default:
-                    throw new InvalidOperationException("Unsupported unit cannot be converted.");
+                    throw new InvalidOperationException($"Unsupported unit '{unit}' cannot be converted.");
             }
         }
 
