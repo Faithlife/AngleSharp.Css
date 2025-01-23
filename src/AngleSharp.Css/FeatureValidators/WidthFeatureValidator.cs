@@ -1,3 +1,5 @@
+using AngleSharp.Css.Values;
+
 namespace AngleSharp.Css.FeatureValidators
 {
     using AngleSharp.Css.Converters;
@@ -11,7 +13,8 @@ namespace AngleSharp.Css.FeatureValidators
         {
             var length = LengthConverter.Convert(feature.Value);
 
-            if (length != null)
+            // Don't validate units that do not yet support conversion to PX from a renderDevice.
+            if (length != null && length is not Length { Type: Length.Unit.Em or Length.Unit.Ex })
             {
                 var desired = length.AsPx(renderDevice, RenderMode.Horizontal);
                 var available = (Double)renderDevice.ViewPortWidth;
